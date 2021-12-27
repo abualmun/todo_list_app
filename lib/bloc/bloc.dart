@@ -34,7 +34,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       await deleteTask(event.task);
       state.mainList = await refreshTasks();
       add(RefreshDatabase());
-    } 
+    }
   }
 }
 
@@ -57,6 +57,11 @@ Future<List<Task>> refreshTasks() async {
         isDone: (maps[i]['isDone'] == 1) ? true : false,
         note: maps[i]['note']);
   });
+}
+
+Future<List<Task>> refreshLists() async {
+  final db = await database;
+  final List<Map<String, dynamic>> lists = await db.query('tasks');
 }
 
 class Task {
